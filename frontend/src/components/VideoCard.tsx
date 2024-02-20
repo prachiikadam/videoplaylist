@@ -1,7 +1,6 @@
 
-import { useState } from "react";
 import { Video } from "../store/store"
-import VideoPlayer from "./VideoPlayer";
+
 
 
 const VideoCard : React.FC<{video:Video}> = ({video} )  => {

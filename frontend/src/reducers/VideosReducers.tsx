@@ -1,3 +1,4 @@
+
 import { PlayList ,Video  } from "../store/store";
 
 
@@ -5,7 +6,9 @@ import { PlayList ,Video  } from "../store/store";
 interface Action {
     type: string;
     playlistName: string;
-    playlistId : string
+    playlistId : string ,
+    playbackPosition : number ,
+    videoIndex : number 
 }
 
 
@@ -20,7 +23,8 @@ const defaultVideos: Video[] =
             ],
             subtitle: "By Blender Foundation",
             thumb: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg",
-            title: "Big Buck Bunny"
+            title: "Big Buck Bunny",
+            playbackPosition : 0
         },
         {
            
@@ -30,7 +34,8 @@ const defaultVideos: Video[] =
             ],
             subtitle: "By Blender Foundation",
             thumb: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg",
-            title: "Elephant Dream"
+            title: "Elephant Dream" ,
+            playbackPosition : 0
         },
         {
            
@@ -40,7 +45,8 @@ const defaultVideos: Video[] =
             ],
             subtitle: "By Google",
             thumb: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerBlazes.jpg",
-            title: "For Bigger Blazes"
+            title: "For Bigger Blazes" ,
+            playbackPosition : 0
         },
         {
            
@@ -50,7 +56,8 @@ const defaultVideos: Video[] =
             ],
             subtitle: "By Google",
             thumb: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerEscapes.jpg",
-            title: "For Bigger Escape"
+            title: "For Bigger Escape" ,
+            playbackPosition : 0
         },
         {
             
@@ -60,7 +67,8 @@ const defaultVideos: Video[] =
             ],
             subtitle: "By Google",
             thumb: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerFun.jpg",
-            title: "For Bigger Fun"
+            title: "For Bigger Fun" ,
+            playbackPosition : 0
         },
         {
            
@@ -70,7 +78,8 @@ const defaultVideos: Video[] =
             ],
             subtitle: "By Google",
             thumb: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerJoyrides.jpg",
-            title: "For Bigger Joyrides"
+            title: "For Bigger Joyrides" ,
+            playbackPosition : 0
         },
         {
            
@@ -80,7 +89,8 @@ const defaultVideos: Video[] =
             ],
             subtitle: "By Google",
             thumb: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ForBiggerMeltdowns.jpg",
-            title: "For Bigger Meltdowns"
+            title: "For Bigger Meltdowns" ,
+            playbackPosition : 0
         },
         {
            
@@ -90,7 +100,8 @@ const defaultVideos: Video[] =
             ],
             subtitle: "By Blender Foundation",
             thumb: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/Sintel.jpg",
-            title: "Sintel"
+            title: "Sintel" ,
+            playbackPosition : 0
         },
         {
             
@@ -100,7 +111,8 @@ const defaultVideos: Video[] =
             ],
             subtitle: "By Garage419",
             thumb: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/SubaruOutbackOnStreetAndDirt.jpg",
-            title: "Subaru Outback On Street And Dirt"
+            title: "Subaru Outback On Street And Dirt" ,
+            playbackPosition : 0
         },
         {
             
@@ -110,7 +122,8 @@ const defaultVideos: Video[] =
             ],
             subtitle: "By Blender Foundation",
             thumb: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/TearsOfSteel.jpg",
-            title: "Tears of Steel"
+            title: "Tears of Steel" ,
+            playbackPosition : 0
         },
         {
             
@@ -120,7 +133,8 @@ const defaultVideos: Video[] =
             ],
             subtitle: "By Garage419",
             thumb: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/VolkswagenGTIReview.jpg",
-            title: "Volkswagen GTI Review"
+            title: "Volkswagen GTI Review" ,
+            playbackPosition : 0
         },
         {
             
@@ -130,7 +144,8 @@ const defaultVideos: Video[] =
             ],
             subtitle: "By Garage419",
             thumb: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/WeAreGoingOnBullrun.jpg",
-            title: "We Are Going On Bullrun"
+            title: "We Are Going On Bullrun" ,
+            playbackPosition : 0
         },
         {
            
@@ -140,7 +155,8 @@ const defaultVideos: Video[] =
             ],
             subtitle: "By Garage419",
             thumb: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/WhatCarCanYouGetForAGrand.jpg",
-            title: "What care can you get for a grand?"
+            title: "What care can you get for a grand?" ,
+            playbackPosition : 0
         }
 ]
 
@@ -153,7 +169,24 @@ const createPlaylist = (state :PlayList[],action :Action) =>{
     }]
 }
 
+const updatePlaybackPosition = (state :PlayList[],action :Action) =>{  
+    return state.map((playlist) => {
+        if (playlist.playlistId === action.playlistId) {
+            return  {
+            ...playlist,
+            videos:  [
+                ...playlist.videos.slice(0, action.videoIndex),
+                { ...playlist.videos[action.videoIndex], 'playbackPosition' : action.playbackPosition },
+                ...playlist.videos.slice(action.videoIndex + 1)
+              ]
+          };
+          
+        }
+        return playlist;
+      });
+     
 
+}
 
 
 
@@ -161,6 +194,8 @@ export const reducer = (state :PlayList[] , action :Action): PlayList[] => {
     switch (action.type) {
         case 'CREATE_PLAYLIST':
             return createPlaylist(state, action);
+        case "UPDATE_PLAYBACK_POSITION":
+         return updatePlaybackPosition(state, action);
         default:
             return state;
     }

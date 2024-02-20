@@ -11,7 +11,8 @@ export interface Video {
     sources: string[];
     subtitle: string;
     thumb: string;
-    title: string
+    title: string ,
+    playbackPosition : number
   }
 
 

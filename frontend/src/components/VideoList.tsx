@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { useSearchParams } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 import { Store } from "../store/store"
 import VideoCard from "./VideoCard"
 
@@ -20,7 +20,7 @@ const playlistToRender = playListsState.filter((playlist)=> playlist.playlistId 
 
   return (
     <div className="flex flex-wrap">
-        { playlistToRender[0].videos.map((video)=>(<VideoCard  video={video}/>))}
+        { playlistToRender[0].videos.map((video,index)=>(<Link to={"/watch?playlistId="+playlistToRender[0].playlistId +"&videoIndex="+index}><VideoCard key={index} video={video}/></Link>))}
     </div>
   )
 }
