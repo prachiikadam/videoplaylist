@@ -2,8 +2,12 @@ import { useContext, useState } from "react"
 import { Store } from "../store/store"
 import { generateId } from '../utils/utils.ts'
 
+interface CreatePlaylistModalProps {
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-const CreatePlaylistModal = ({setIsModalOpen}) => {
+
+const CreatePlaylistModal : React.FC<CreatePlaylistModalProps>= ({setIsModalOpen}) => {
  const [newPlaylistName ,setNewPlaylistName] = useState('')
 const {dispatch } =  useContext(Store)
  const createPlaylist = () =>{

@@ -192,6 +192,7 @@ const updatePlaybackPosition = (state :PlayList[],action :Action) =>{
 
 const reorderVideos = ( state :PlayList[],action :Action) =>{
     // add logic later 
+    console.log('Action is ',action)
     return state;    
 }
 

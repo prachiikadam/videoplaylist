@@ -16,24 +16,26 @@ const VideoPlayer = () => {
   const videoToPlay = videoIndex ? (playlist?.videos[parseInt(videoIndex)]) :null
 
 
-  const inputRef = useRef(null);
+  const inputRef = useRef <HTMLVideoElement>(null);
 
 
   const timeUpdateHandler =(e : React.SyntheticEvent<HTMLVideoElement>)=>{
-   
+   if(videoIndex && playlistId){
     dispatch({
       type : "UPDATE_PLAYBACK_POSITION",
       videoIndex : parseInt(videoIndex) ,
       playlistId : playlistId ,
       playbackPosition :  e.currentTarget.currentTime
     })
+   }
+   
 
   }
 
 
   useEffect(()=>{
-    if(inputRef && inputRef.current){
-      inputRef.current.currentTime = videoToPlay?.playbackPosition
+    if(inputRef && inputRef.current && videoToPlay){
+      inputRef.current.currentTime = videoToPlay.playbackPosition
     }
   },[])
 
