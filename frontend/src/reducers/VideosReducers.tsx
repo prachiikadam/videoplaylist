@@ -8,7 +8,9 @@ interface Action {
     playlistName: string;
     playlistId : string ,
     playbackPosition : number ,
-    videoIndex : number 
+    videoIndex : number ,
+    index1 : number ,
+    index2 : number
 }
 
 
@@ -188,6 +190,10 @@ const updatePlaybackPosition = (state :PlayList[],action :Action) =>{
 
 }
 
+const reorderVideos = ( state :PlayList[],action :Action) =>{
+    // add logic later 
+    return state;    
+}
 
 
 export const reducer = (state :PlayList[] , action :Action): PlayList[] => {
@@ -196,6 +202,8 @@ export const reducer = (state :PlayList[] , action :Action): PlayList[] => {
             return createPlaylist(state, action);
         case "UPDATE_PLAYBACK_POSITION":
          return updatePlaybackPosition(state, action);
+        case "REORDER_VIDEOS" :
+            return reorderVideos(state,action)
         default:
             return state;
     }
